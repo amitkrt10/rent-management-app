@@ -19,6 +19,7 @@ def app():
         return data
 
     meterDf = read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet3")
+    meterDf = meterDf[meterDf.columns.drop(list(meterDf.filter(regex='Unnamed')))]  
     meterCols = list(meterDf.columns)
     flatList = meterCols[2:]
     readingDf = read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet4")

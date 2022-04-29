@@ -21,5 +21,8 @@ def app():
     duesDf = read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet8")
     finaldf = duesDf.dropna()
     finaldf.rename(columns = {'flatNo':'Flat No','tenantName':'Tenant Name','paymentDue':'Current Dues'}, inplace = True)
-    st.table(finaldf[['Flat No','Tenant Name','Current Dues']])
+    displayDf = finaldf[finaldf['Current Dues']>0]
+    displayDf.sort_values(by=['Current Dues'], ascending=False, inplace=True)
+    displayDf.reset_index(inplace=True)
+    st.table(displayDf[['Flat No','Tenant Name','Current Dues']])
 

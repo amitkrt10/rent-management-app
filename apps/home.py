@@ -30,6 +30,7 @@ def app():
     st.info("### Total Dues = "+str(totalDue))
 
     #Vacant Flats
+    st.markdown("<h3 style='text-align: center;'>Vaccant Flats</h3>", unsafe_allow_html=True)
     flatsDf = read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet10")
     occupiedFlatList = list(finaldf['Flat No'])
     flatList = list(flatsDf['flatNo'])

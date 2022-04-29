@@ -58,6 +58,7 @@ def app():
 			newTenantDetails.append(meterReading)		
 			newTenantDetails.append(dateOfOccupancy)
 			tenantDf.loc[len(tenantDf.index)] = newTenantDetails
+			tenantDf.sort_values(by=['flatNo'], inplace=True)
 			sh = gc.open('rentApp')
 			#Update Active Tenant
 			wks = sh[0]

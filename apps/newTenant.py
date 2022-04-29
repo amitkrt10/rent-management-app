@@ -29,7 +29,12 @@ def app():
 	with st.form("New Tenant Details",clear_on_submit=True):
 		newTenantDetails = []
 		tenantDf = read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet1")
-		flatNo = st.selectbox("Flat No.",flatList)
+		tenantFlatList = list(tenantDf['flatNo'])
+		availableFlatList = []
+		for x in flatList:
+			if x not in tenantFlatList:
+				availableFlatList.append(x)
+		flatNo = st.selectbox("Flat No.",availableFlatList)
 		tenantName = st.text_input("Enter Full Name")
 		tenantMobile = st.text_input("Enter Mobile Number")
 		securityDeposite = st.text_input("Secutity Deposite Amount")

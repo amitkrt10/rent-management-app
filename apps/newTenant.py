@@ -65,6 +65,12 @@ def app():
 			wks.set_dataframe(tenantDf,(1,1))
 			#Add Column to Meter Reading
 			meterDf[flatNo]=0
+			meterCols = list(meterDf.columns)
+			dateCols = meterCols[0:2]
+			flatcols = meterCols[2:]
+			flatcols.sort()
+			cols = dateCols + flatcols
+			meterDf = meterDf[cols]
 			wks = sh[3]
 			wks.set_dataframe(meterDf,(1,1))
 			st.success("Details of "+tenantName+" submitted successfully for Flat No. "+flatNo)

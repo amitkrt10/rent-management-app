@@ -25,4 +25,5 @@ def app():
     displayDf.sort_values(by=['Current Dues'], ascending=False, inplace=True)
     displayDf.reset_index(inplace=True)
     st.table(displayDf[['Flat No','Tenant Name','Current Dues']])
-
+    totalDue = displayDf['Current Dues'].sum()
+    st.info("### Total Dues = "+str(totalDue))

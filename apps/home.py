@@ -22,7 +22,7 @@ def app():
 
     fig = go.Figure(data=[go.Table(
     columnorder = [1,2,3],
-    columnwidth = [100,200,120],
+    columnwidth = [40,80,400],
     header = dict(
         values = [['<b>Flat No.</b>'],
                     ['<b>Tenant Name</b>'],
@@ -30,19 +30,19 @@ def app():
         line_color='darkslategray',
         fill_color='royalblue',
         align='center',
-        font=dict(color='white', size=24),
-        height=60
+        font=dict(color='white', size=12),
+        height=40
     ),
     cells=dict(
         values=[displayDf['Flat No'],displayDf['Tenant Name'],displayDf['Current Dues']],
         line_color='darkslategray',
         fill=dict(color=['paleturquoise', 'white']),
         align=['center', 'left', 'right'],
-        font=dict(color='black', size=20),
-        height=40)
+        font=dict(color='black', size=12),
+        height=30)
         )
     ])
-    fig.update_layout(width=1000, height=(200+((lendf+1)*40)), margin=dict(l=0, r=0, t=0, b=0))
+    fig.update_layout(width=320, height=(200+((lendf+1)*40)), margin=dict(l=0, r=0, t=0, b=0))
     st.write(fig)
 
     #Vacant Flats

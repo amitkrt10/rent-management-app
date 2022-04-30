@@ -22,7 +22,7 @@ def app():
 
     fig = go.Figure(data=[go.Table(
     columnorder = [1,2,3],
-    columnwidth = [40,80,400],
+    columnwidth = [40,80,40],
     header = dict(
         values = [['<b>Flat No.</b>'],
                     ['<b>Tenant Name</b>'],

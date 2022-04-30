@@ -2,27 +2,15 @@ import streamlit as st
 def app():
     import pandas as pd
     import numpy as np
+    import appModules as am
     from datetime import date
     import dateutil.relativedelta
-    import urllib
-    from urllib.request import urlopen
-    import ssl
     import pygsheets
     gc = pygsheets.authorize(service_file='creds.json')
-
-    # SSL Verification
-    ssl._create_default_https_context = ssl._create_unverified_context
-
-    # Read Data Function
-    def read_gsheet(sheetId,sheetName):
-        url = f"https://docs.google.com/spreadsheets/d/{sheetId}/gviz/tq?tqx=out:csv&sheet={sheetName}"
-        data = pd.read_csv(urllib.request.urlopen(url))
-        return data
     
-    tenantDf = read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet1")
-    meterDf = read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet4")
+    meterDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet4")
     meterMonthList = set(meterDf['forMonth'])
-    billDf = read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet9")
+    billDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet9")
     billMonthList = set(billDf['billMonth'])
     today = date.today()
     prevMonth = (today - dateutil.relativedelta.relativedelta(months=1)).strftime("%m/%Y")
@@ -35,9 +23,9 @@ def app():
         else:
             if prevMonth in meterMonthList:
                 dateList = [today,prevMonth]
-                tenantDf = read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet1")
-                dueDf = read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet8")
-                meterDf = read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet6")
+                tenantDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet1")
+                dueDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet8")
+                meterDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet6")
                 tenantDf.drop(['tenantName','mobile','securityDeposite','previousDue','initialMeterReading','dateOfOcupamcy'], axis = 1, inplace = True)
                 tenantDfList = tenantDf.values.tolist()
                 for i in range(len(tenantDfList)):

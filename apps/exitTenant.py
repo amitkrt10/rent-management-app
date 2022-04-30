@@ -2,32 +2,21 @@ import streamlit as st
 def app():
     import pandas as pd
     import numpy as np
-    import urllib
-    from urllib.request import urlopen
-    import ssl
+    import appModules as am
     import pygsheets
     gc = pygsheets.authorize(service_file='creds.json')
 
-    # SSL Verification
-    ssl._create_default_https_context = ssl._create_unverified_context
-
-    # Read Data Function
-    def read_gsheet(sheetId,sheetName):
-        url = f"https://docs.google.com/spreadsheets/d/{sheetId}/gviz/tq?tqx=out:csv&sheet={sheetName}"
-        data = pd.read_csv(urllib.request.urlopen(url))
-        return data
-
-    tenantDf = read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet1")
+    tenantDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet1")
     flatList = list(tenantDf['flatNo'])
-    meterDF = read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet4")
-    billDf = read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet9")
-    paymentDf = read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet7")
+    meterDF = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet4")
+    billDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet9")
+    paymentDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet7")
 
     #New Tenant Form
     st.markdown("<h3 style='text-align: center;'>Exit Tenant</h3>", unsafe_allow_html=True)
     with st.form("Exit Tenant",clear_on_submit=True):
         exitList = []
-        exitDf = read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet2")
+        exitDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet2")
         flatNo = st.selectbox("Flat No.",flatList)
         finalMeterReading = st.text_input("Final Meter Reading")
         exitDate = st.date_input("Exit Date")

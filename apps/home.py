@@ -2,36 +2,51 @@ import streamlit as st
 def app():
     import pandas as pd
     import numpy as np
-    import urllib
-    from urllib.request import urlopen
-    import ssl
     import pygsheets
+    import plotly.graph_objects as go
+    import appModules as am
     gc = pygsheets.authorize(service_file='creds.json')
 
-    # SSL Verification
-    ssl._create_default_https_context = ssl._create_unverified_context
-
-    # Read Data Function
-    def read_gsheet(sheetId,sheetName):
-        url = f"https://docs.google.com/spreadsheets/d/{sheetId}/gviz/tq?tqx=out:csv&sheet={sheetName}"
-        data = pd.read_csv(urllib.request.urlopen(url))
-        return data
-
     #Current Dues
-    st.markdown("<h3 style='text-align: center;'>Current Dues</h3>", unsafe_allow_html=True)
-    duesDf = read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet8")
+    duesDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet8")
     finaldf = duesDf.dropna()
     finaldf.rename(columns = {'flatNo':'Flat No','tenantName':'Tenant Name','paymentDue':'Current Dues'}, inplace = True)
-    displayDf = finaldf[finaldf['Current Dues']>0]
+    displayDf = finaldf[finaldf['Current Dues']>0][['Flat No','Tenant Name','Current Dues']]
     displayDf.sort_values(by=['Current Dues'], ascending=False, inplace=True)
     displayDf.reset_index(inplace=True)
-    st.table(displayDf[['Flat No','Tenant Name','Current Dues']])
+    displayDf.drop(['index'],axis=1,inplace=True)
     totalDue = displayDf['Current Dues'].sum()
-    st.info("### Total Dues = "+str(totalDue))
+    lendf = len(displayDf)
+    st.markdown(f"<h3 style='text-align: center;'>Current Dues = {totalDue}</h3>", unsafe_allow_html=True)
+    st.table(displayDf)
+
+    fig = go.Figure(data=[go.Table(
+    columnorder = [1,2,3],
+    columnwidth = [100,200,120],
+    header = dict(
+        values = [['<b>Flat No.</b>'],
+                    ['<b>Tenant Name</b>'],
+                    ['<b>Current Dues</b>']],
+        line_color='darkslategray',
+        fill_color='royalblue',
+        align='center',
+        font=dict(color='white', size=24),
+        height=60
+    ),
+    cells=dict(
+        values=[displayDf['Flat No'],displayDf['Tenant Name'],displayDf['Current Dues']],
+        line_color='darkslategray',
+        fill=dict(color=['paleturquoise', 'white']),
+        align=['center', 'left', 'right'],
+        font=dict(color='black', size=20),
+        height=40)
+        )
+    ])
+    fig.update_layout(width=1000, height=(200+((lendf+1)*40)), margin=dict(l=0, r=0, t=0, b=0))
+    st.write(fig)
 
     #Vacant Flats
-    st.markdown("<h3 style='text-align: center;'>Vaccant Flats</h3>", unsafe_allow_html=True)
-    flatsDf = read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet10")
+    flatsDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet10")
     occupiedFlatList = list(finaldf['Flat No'])
     flatList = list(flatsDf['flatNo'])
     vacantFlatList = []
@@ -39,5 +54,6 @@ def app():
         if x not in occupiedFlatList:
             vacantFlatList.append(x)
     vacantFlatDf = flatsDf[flatsDf['flatNo'].isin(vacantFlatList)]
-    vacantFlatDf.rename(columns={'flatNo':'Flat No.','type':'Type'})
+    vacantFlatDf.rename(columns={'flatNo':'Flat No.','type':'Type'}, inplace = True)
+    st.markdown(f"<h3 style='text-align: center;'>Vaccant Flats = {len(vacantFlatDf)}</h3>", unsafe_allow_html=True)
     st.table(vacantFlatDf)

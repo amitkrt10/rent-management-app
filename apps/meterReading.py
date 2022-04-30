@@ -2,27 +2,16 @@ import streamlit as st
 def app():
     import pandas as pd
     import numpy as np
-    import urllib
-    from urllib.request import urlopen
-    import ssl
+    import appModules as am
     import dateutil.relativedelta
     import pygsheets
     gc = pygsheets.authorize(service_file='creds.json')
 
-    # SSL Verification
-    ssl._create_default_https_context = ssl._create_unverified_context
-
-    # Read Data Function
-    def read_gsheet(sheetId,sheetName):
-        url = f"https://docs.google.com/spreadsheets/d/{sheetId}/gviz/tq?tqx=out:csv&sheet={sheetName}"
-        data = pd.read_csv(urllib.request.urlopen(url))
-        return data
-
-    meterDf = read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet3")
+    meterDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet3")
     meterDf = meterDf[meterDf.columns.drop(list(meterDf.filter(regex='Unnamed')))]  
     meterCols = list(meterDf.columns)
     flatList = meterCols[2:]
-    readingDf = read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet4")
+    readingDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet4")
     readingDf = readingDf[readingDf.columns.drop(list(readingDf.filter(regex='Unnamed')))]  
 
     #New Tenant Form

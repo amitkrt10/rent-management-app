@@ -22,7 +22,7 @@ def app():
 
     fig = go.Figure(data=[go.Table(
     columnorder = [1,2,3],
-    columnwidth = [40,80,40],
+    columnwidth = [40,80,60],
     header = dict(
         values = [['<b>Flat No.</b>'],
                     ['<b>Tenant Name</b>'],
@@ -42,7 +42,7 @@ def app():
         height=30)
         )
     ])
-    fig.update_layout(width=340, height=(150+((lendf+1)*30)), margin=dict(l=0, r=0, t=0, b=0))
+    fig.update_layout(width=360, height=(150+((lendf+1)*30)), margin=dict(l=0, r=0, t=0, b=0))
     st.write(fig)
 
     #Vacant Flats

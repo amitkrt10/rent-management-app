@@ -42,7 +42,7 @@ def app():
         height=30)
         )
     ])
-    fig.update_layout(width=320, height=(200+((lendf+1)*40)), margin=dict(l=0, r=0, t=0, b=0))
+    fig.update_layout(width=340, height=(150+((lendf+1)*30)), margin=dict(l=0, r=0, t=0, b=0))
     st.write(fig)
 
     #Vacant Flats

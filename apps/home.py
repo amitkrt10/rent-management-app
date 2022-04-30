@@ -13,12 +13,9 @@ def app():
     finaldf.rename(columns = {'flatNo':'Flat No','tenantName':'Tenant Name','paymentDue':'Current Dues'}, inplace = True)
     displayDf = finaldf[finaldf['Current Dues']>0][['Flat No','Tenant Name','Current Dues']]
     displayDf.sort_values(by=['Current Dues'], ascending=False, inplace=True)
-    displayDf.reset_index(inplace=True)
-    displayDf.drop(['index'],axis=1,inplace=True)
     totalDue = displayDf['Current Dues'].sum()
     lendf = len(displayDf)
     st.markdown(f"<h3 style='text-align: center;'>Current Dues = {totalDue}</h3>", unsafe_allow_html=True)
-    st.table(displayDf)
 
     fig = go.Figure(data=[go.Table(
     columnorder = [1,2,3],

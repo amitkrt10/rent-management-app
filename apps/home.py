@@ -3,6 +3,7 @@ def app():
     import pandas as pd
     import numpy as np
     import pygsheets
+    import pywhatkit
     import plotly.graph_objects as go
     import appModules as am
     gc = pygsheets.authorize(service_file='creds.json')
@@ -40,4 +41,4 @@ def app():
     ])
     fig.update_layout(width=370, height=(50+((lendf+1)*30)), margin=dict(l=0, r=0, t=0, b=0))
     st.write(fig)
-    pywhatkit.sendwhatmsg("+918837245956","Geeks For Geeks!",16,15,True,5)
+    pywhatkit.sendwhatmsg("+918837245956","Geeks For Geeks!",16,20,True,5)

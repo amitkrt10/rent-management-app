@@ -30,7 +30,7 @@ def app():
         line_color='darkslategray',
         fill_color='royalblue',
         align='center',
-        font=dict(color='white', size=12),
+        font=dict(color='white', size=16),
         height=40
     ),
     cells=dict(
@@ -38,11 +38,11 @@ def app():
         line_color='darkslategray',
         fill=dict(color=['paleturquoise', 'white']),
         align=['center', 'left', 'right'],
-        font=dict(color='black', size=12),
+        font=dict(color='black', size=14),
         height=30)
         )
     ])
-    fig.update_layout(width=360, height=(150+((lendf+1)*30)), margin=dict(l=0, r=0, t=0, b=0))
+    fig.update_layout(width=370, height=(150+((lendf+1)*30)), margin=dict(l=0, r=0, t=0, b=0))
     st.write(fig)
 
     #Vacant Flats

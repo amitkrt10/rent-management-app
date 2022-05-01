@@ -43,6 +43,7 @@ def app():
                 st.error("Please take the meter reading for "+prevMonth)
 
     st.markdown("<h3 style='text-align: center;'>View Bills</h3>", unsafe_allow_html=True)
+    tenantDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet1")
     viewMonthList = []
     if prevMonth in billMonthList:
         viewMonthList.append(prevMonth)

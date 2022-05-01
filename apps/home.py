@@ -63,8 +63,8 @@ def app():
     columnwidth = [40,50,50,40],
     header = dict(
         values = [['<b>Flat No.</b>'],
-                    [f'<b>{meterDfCols[0]}</b>'],
                     [f'<b>{meterDfCols[1]}</b>'],
+                    [f'<b>{meterDfCols[0]}</b>'],
                     [f'<b>Units</b>']],
         line_color='darkslategray',
         fill_color='royalblue',

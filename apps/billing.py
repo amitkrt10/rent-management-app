@@ -109,7 +109,7 @@ def app():
             height=30)
             )
         ],
-        layout=go.Layout(title=go.layout.Title(text=f"Rent for month: <b>{viewmonth}</b> | *Pay before: <b>{lastDate}</b>"))
+        layout=go.Layout(title=go.layout.Title(text=f"Rent for : <b>{viewmonth}</b> | Pay before : <b>{lastDate}</b>"))
         )
         fig.update_layout(width=370, height=(100+((lendf+1)*30)), margin=dict(l=0, r=0, t=50, b=0))
         st.write(fig)

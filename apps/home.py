@@ -1,6 +1,3 @@
-from email import message
-from operator import index
-from xml.dom.pulldom import IGNORABLE_WHITESPACE
 import streamlit as st
 def app():
     import pandas as pd

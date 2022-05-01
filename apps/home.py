@@ -41,7 +41,3 @@ def app():
     ])
     fig.update_layout(width=370, height=(50+((lendf+1)*30)), margin=dict(l=0, r=0, t=0, b=0))
     st.write(fig)
-
-    #if st.button("Send Whatsapp"):
-        #msg = Hi, Your Total Rent Due till 
-        #am.sendwhatmsg_instantly('phone', alert_msg)

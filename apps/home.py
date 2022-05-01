@@ -76,7 +76,7 @@ def app():
         values=[meterDisplayDf['Flat No.'],meterDisplayDf[meterDfCols[1]],meterDisplayDf[meterDfCols[0]],meterDisplayDf['Units']],
         line_color='darkslategray',
         fill=dict(color=['paleturquoise', 'white']),
-        align=['center', 'left', 'right'],
+        align=['center', 'right', 'right', 'right'],
         font=dict(color='black', size=14),
         height=30)
         )

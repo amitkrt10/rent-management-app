@@ -5,6 +5,7 @@ def app():
     import appModules as am
     from datetime import date
     import dateutil.relativedelta
+    import plotly.graph_objects as go
     import pygsheets
     gc = pygsheets.authorize(service_file='creds.json')
     
@@ -78,6 +79,37 @@ def app():
         if previousDue!=0:
             viewdf.loc[len(viewdf.index)]= ["Previous Due",previousDue]
         tenantName = tenantDf[tenantDf['flatNo']==flatNo]['tenantName'].values[0]
-        st.write(tenantName)
-        st.table(viewdf)
-        st.info("Total Rent = "+str(totalCost))
+        lendf = len(viewdf)+1
+        viewCols = list(viewdf.columns)
+        if viewmonth[:2]=='12':
+            lastDate = '6/1/'+str(int(viewmonth[-4:])+1)
+        else:
+            lastDate = '6/'+str(int(viewmonth[:2])+1)+viewmonth[-5:]
+        dfValues = [list(viewdf[viewCols[0]]) + ['<b>Total</b>'],
+                        list(viewdf[viewCols[1]]) + [f'<b>{viewdf[viewCols[1]].sum()}</b>']]
+
+        fig = go.Figure(data=[go.Table(
+        columnorder = [1,2],
+        columnwidth = [90,90],
+        header = dict(
+            values = [[f'<b>{flatNo}</b>'],
+                        [f'<b>{tenantName}</b>']],
+            line_color='darkslategray',
+            fill_color='royalblue',
+            align='center',
+            font=dict(color='white', size=18),
+            height=40
+        ),
+        cells=dict(
+            values=dfValues,
+            line_color='darkslategray',
+            fill=dict(color=['paleturquoise', 'white']),
+            align=['left', 'right'],
+            font=dict(color='black', size=18),
+            height=30)
+            )
+        ],
+        layout=go.Layout(title=go.layout.Title(text=f"Rent for month: <b>{viewmonth}</b> | *Pay before: <b>{lastDate}</b>"))
+        )
+        fig.update_layout(width=370, height=(100+((lendf+1)*30)), margin=dict(l=0, r=0, t=50, b=0))
+        st.write(fig)

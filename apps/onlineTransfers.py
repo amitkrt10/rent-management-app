@@ -15,10 +15,10 @@ def app():
     bankDf["Withdrawal"] = bankDf["Withdrawal"].astype(int)
     bankDf["Deposit"] = bankDf["Deposit"].astype(int)
     totalWithdrawal = bankDf["Withdrawal"].sum()
-    totalDeposit = bankDf["Withdrawal"].sum()
+    totalDeposit = bankDf["Deposit"].sum()
     st.info(f"### Balance = ₹ {totalDeposit-totalWithdrawal}")
     statementDf = bankDf
-    statementDf["Temp"] = statementDf['Withdrawal'] - statementDf['Withdrawal']
+    statementDf["Temp"] = statementDf['Deposit'] - statementDf['Withdrawal']
     statementDf["Balance"] = statementDf['Temp'].cumsum()
     lendf = len(statementDf)+1
     viewCols = list(statementDf.columns)

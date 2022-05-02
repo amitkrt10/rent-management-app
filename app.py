@@ -1,6 +1,6 @@
 import streamlit as st
 from multiapp import MultiApp
-from apps import home, newTenant, exitTenant, meterReading, billing, payment,statement # import your app modules here
+from apps import home, newTenant, exitTenant, meterReading, billing, payment,statement,onlineTransfers # import your app modules here
 
 # Configure app display
 st.set_page_config(
@@ -22,6 +22,7 @@ app.add_app("Electric Meter Reading", meterReading.app)
 app.add_app("Create and Send Bills", billing.app)
 app.add_app("Payment Received", payment.app)
 app.add_app("Statement", statement.app)
+app.add_app("Online Transfers", onlineTransfers.app)
 app.add_app("Remove Tenant", exitTenant.app)
 
 # The main app

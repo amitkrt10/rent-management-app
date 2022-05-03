@@ -36,7 +36,7 @@ def app():
                     tempList.append(meterCost)
                     tempList.append(paymentDue)
                     billDf.loc[len(billDf.index)+i]= tempList
-                sh = gc.open('rentApp')
+                sh = gc.open(st.secrets["sheetName"])
                 wks = sh[8]
                 wks.set_dataframe(billDf,(1,1))
                 st.success("Bills successfully created for the month of "+prevMonth)

@@ -30,7 +30,7 @@ def app():
             readingDfList.append(str(prevMonthDate.month)+"/"+str(prevMonthDate.year))
             readingDfList = readingDfList + readingList
             readingDf.loc[len(readingDf.index)] = readingDfList
-            sh = gc.open('rentApp')
+            sh = gc.open(st.secrets["sheetName"])
             wks = sh[3]
             wks.set_dataframe(readingDf,(1,1))
             st.success("Electricity Meter Reading Successfully Submitted")

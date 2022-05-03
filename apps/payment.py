@@ -29,7 +29,7 @@ def app():
             paymentList.append(amount)
             paymentList.append(mode)
             paymentDf.loc[len(paymentDf.index)] = paymentList
-            sh = gc.open('rentApp')
+            sh = gc.open(st.secrets["sheetName"])
             wks = sh[6]
             wks.set_dataframe(paymentDf,(1,1))
             st.success("₹ "+amount+" received from "+tenantName+" by "+mode)

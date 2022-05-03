@@ -28,7 +28,7 @@ def app():
             exitList.append(finalMeterReading)
             exitList.append(exitDate)
             tenantName = exitList[1]
-            sh = gc.open('rentApp')
+            sh = gc.open(st.secrets["sheetName"])
             #Delete Column from meter reading
             meterDF.drop([flatNo], axis=1, inplace=True)
             wks = sh[3]

@@ -2,10 +2,8 @@ import streamlit as st
 def app():
     import pandas as pd
     import numpy as np
-    import pygsheets
     import plotly.graph_objects as go
     import appModules as am
-    gc = pygsheets.authorize(service_file='creds.json')
 
     #Current Dues
     duesDf = am.read_gsheet(st.secrets["sheetId"],"Sheet8")

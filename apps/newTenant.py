@@ -53,7 +53,7 @@ def app():
 			newTenantDetails.append(dateOfOccupancy)
 			tenantDf.loc[len(tenantDf.index)] = newTenantDetails
 			tenantDf.sort_values(by=['flatNo'], inplace=True)
-			sh = gc.open('rentApp')
+			sh = gc.open(st.secrets["sheetName"])
 			#Update Active Tenant
 			wks = sh[0]
 			wks.set_dataframe(tenantDf,(1,1))

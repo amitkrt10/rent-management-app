@@ -8,7 +8,7 @@ def app():
     gc = pygsheets.authorize(service_file='creds.json')
 
     #Current Dues
-    duesDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet8")
+    duesDf = am.read_gsheet(st.secrets["sheetId"],"Sheet8")
     finaldf = duesDf.dropna()
     displayDf = finaldf[finaldf['paymentDue']>0][['flatNo','tenantName','paymentDue']]
     displayDf.sort_values(by=['paymentDue'], ascending=False, inplace=True)
@@ -42,7 +42,7 @@ def app():
     st.write(fig)
 
     #Electrictity Usage
-    meterDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet5")
+    meterDf = am.read_gsheet(st.secrets["sheetId"],"Sheet5")
     meterDf = meterDf[meterDf.columns.drop(list(meterDf.filter(regex='Unnamed')))]
     meterDf.drop(['readingDate'],axis=1,inplace=True)
     maxIndex = meterDf.index.max()

@@ -6,10 +6,10 @@ def app():
     import pygsheets
     gc = pygsheets.authorize(service_file='creds.json')
     
-    tenantDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet1")
+    tenantDf = am.read_gsheet(st.secrets["sheetId"],"Sheet1")
     tenantDict = dict(zip(tenantDf['flatNo'], tenantDf['tenantName']))
     flatList = list(tenantDict.keys())
-    paymentDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet7")
+    paymentDf = am.read_gsheet(st.secrets["sheetId"],"Sheet7")
 
     #New Payment Form
     st.markdown("<h3 style='text-align: center;'>Payment Details</h3>", unsafe_allow_html=True)

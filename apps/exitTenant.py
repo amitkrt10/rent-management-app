@@ -6,17 +6,17 @@ def app():
     import pygsheets
     gc = pygsheets.authorize(service_file='creds.json')
 
-    tenantDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet1")
+    tenantDf = am.read_gsheet(st.secrets["sheetId"],"Sheet1")
     flatList = list(tenantDf['flatNo'])
-    meterDF = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet4")
-    billDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet9")
-    paymentDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet7")
+    meterDF = am.read_gsheet(st.secrets["sheetId"],"Sheet4")
+    billDf = am.read_gsheet(st.secrets["sheetId"],"Sheet9")
+    paymentDf = am.read_gsheet(st.secrets["sheetId"],"Sheet7")
 
     #New Tenant Form
     st.markdown("<h3 style='text-align: center;'>Exit Tenant</h3>", unsafe_allow_html=True)
     with st.form("Exit Tenant",clear_on_submit=True):
         exitList = []
-        exitDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet2")
+        exitDf = am.read_gsheet(st.secrets["sheetId"],"Sheet2")
         flatNo = st.selectbox("Flat No.",flatList)
         finalMeterReading = st.text_input("Final Meter Reading")
         exitDate = st.date_input("Exit Date")

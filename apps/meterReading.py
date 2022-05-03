@@ -7,11 +7,11 @@ def app():
     import pygsheets
     gc = pygsheets.authorize(service_file='creds.json')
 
-    meterDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet3")
+    meterDf = am.read_gsheet(st.secrets["sheetId"],"Sheet3")
     meterDf = meterDf[meterDf.columns.drop(list(meterDf.filter(regex='Unnamed')))]  
     meterCols = list(meterDf.columns)
     flatList = meterCols[2:]
-    readingDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet4")
+    readingDf = am.read_gsheet(st.secrets["sheetId"],"Sheet4")
     readingDf = readingDf[readingDf.columns.drop(list(readingDf.filter(regex='Unnamed')))]  
 
     #New Tenant Form

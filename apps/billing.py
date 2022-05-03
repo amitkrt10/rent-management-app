@@ -9,9 +9,9 @@ def app():
     import pygsheets
     gc = pygsheets.authorize(service_file='creds.json')
     
-    meterDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet4")
+    meterDf = am.read_gsheet(st.secrets["sheetId"],"Sheet4")
     meterMonthList = set(meterDf['forMonth'])
-    billDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet9")
+    billDf = am.read_gsheet(st.secrets["sheetId"],"Sheet9")
     billMonthList = set(billDf['billMonth'])
     today = date.today()
     prevMonth = (today - dateutil.relativedelta.relativedelta(months=1)).strftime("%m/%Y")
@@ -24,9 +24,9 @@ def app():
         else:
             if prevMonth in meterMonthList:
                 dateList = [today,prevMonth]
-                tenantDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet1")
-                dueDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet8")
-                meterDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet6")
+                tenantDf = am.read_gsheet(st.secrets["sheetId"],"Sheet1")
+                dueDf = am.read_gsheet(st.secrets["sheetId"],"Sheet8")
+                meterDf = am.read_gsheet(st.secrets["sheetId"],"Sheet6")
                 tenantDf.drop(['tenantName','mobile','securityDeposite','previousDue','initialMeterReading','dateOfOcupamcy'], axis = 1, inplace = True)
                 tenantDfList = tenantDf.values.tolist()
                 for i in range(len(tenantDfList)):
@@ -44,7 +44,7 @@ def app():
                 st.error("Please take the meter reading for "+prevMonth)
 
     st.markdown("<h3 style='text-align: center;'>View Bills</h3>", unsafe_allow_html=True)
-    tenantDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet1")
+    tenantDf = am.read_gsheet(st.secrets["sheetId"],"Sheet1")
     viewMonthList = []
     if prevMonth in billMonthList:
         viewMonthList.append(prevMonth)

@@ -7,9 +7,9 @@ def app():
 	gc = pygsheets.authorize(service_file='creds.json')
 
 	#options
-	flatDF = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet10")
+	flatDF = am.read_gsheet(st.secrets["sheetId"],"Sheet10")
 	flatList = list(flatDF['flatNo'])
-	meterDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet4")
+	meterDf = am.read_gsheet(st.secrets["sheetId"],"Sheet4")
 	meterDf = meterDf[meterDf.columns.drop(list(meterDf.filter(regex='Unnamed')))]
 
 
@@ -17,7 +17,7 @@ def app():
 	st.markdown("<h3 style='text-align: center;'>New Tenant Details</h3>", unsafe_allow_html=True)
 	with st.form("New Tenant Details",clear_on_submit=True):
 		newTenantDetails = []
-		tenantDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet1")
+		tenantDf = am.read_gsheet(st.secrets["sheetId"],"Sheet1")
 		tenantFlatList = list(tenantDf['flatNo'])
 		availableFlatList = []
 		for x in flatList:

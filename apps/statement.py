@@ -10,9 +10,9 @@ def app():
     gc = pygsheets.authorize(service_file='creds.json')
 
     #Current Dues
-    tenantDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet1")
-    billDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet9")
-    paymentDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet7")
+    tenantDf = am.read_gsheet(st.secrets["sheetId"],"Sheet1")
+    billDf = am.read_gsheet(st.secrets["sheetId"],"Sheet9")
+    paymentDf = am.read_gsheet(st.secrets["sheetId"],"Sheet7")
     flatList = list(tenantDf['flatNo'])
     flatNo = st.selectbox("Select Flat No",flatList)
     statementDf = pd.DataFrame(columns=["Date","Bills","Payments"])

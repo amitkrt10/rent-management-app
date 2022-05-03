@@ -11,7 +11,7 @@ def app():
     gc = pygsheets.authorize(service_file='creds.json')
 
     #Current Dues
-    bankDf = am.read_gsheet("1btdfIIxZYTHpadDRxkKDEhOzh8NnFEUB5ugrWPOMgTs","Sheet12")
+    bankDf = am.read_gsheet(st.secrets["sheetId"],"Sheet12")
     bankDf.fillna(0,inplace=True)
     bankDf["Withdrawal"] = bankDf["Withdrawal"].astype(int)
     bankDf["Deposit"] = bankDf["Deposit"].astype(int)

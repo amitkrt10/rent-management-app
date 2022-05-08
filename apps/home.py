@@ -118,6 +118,7 @@ def app():
     meterDisplayDf["Units"] = meterDisplayDf[meterDfCols[1]] - meterDisplayDf[meterDfCols[0]]
     meterDisplayDf['Flat No.'] = meterDisplayDf.index
     totalUsage = meterDisplayDf['Units'].sum()
+    lendf = len(meterDisplayDf)
     st.markdown(f"<h3 style='text-align: center;'>Electricity Usage  = {totalUsage} KW</h3>", unsafe_allow_html=True)
 
     fig = go.Figure(data=[go.Table(

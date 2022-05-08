@@ -68,7 +68,7 @@ def app():
 
     fig = go.Figure(data=[go.Table(
     columnorder = [1,2,3,4,5,6],
-    columnwidth = [40,28,28,28,28,28],
+    columnwidth = [30,30,30,30,30,30],
     header = dict(
         values = [['<b>Month</b>'],
                     ['<b>Cash</b>'],

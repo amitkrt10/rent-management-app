@@ -31,7 +31,7 @@ def app():
 
     fig = go.Figure(data=[go.Table(
     columnorder = [1,2,3,4,5],
-    columnwidth = [40,20,20,20,80],
+    columnwidth = [25,25,25,25,80],
     header = dict(
         values = [['<b>Date</b>'],
                     ['<b>Credit</b>'],

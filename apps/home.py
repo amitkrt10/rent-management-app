@@ -47,12 +47,8 @@ def app():
     billGroupBy = billDf.groupby(by=['newMonth'])['total'].sum()
     paymentDf = am.read_gsheet(st.secrets["sheetId"],"Sheet7")
     pivotDf = pd.pivot_table(paymentDf,values='amount',index='paymentMonth',columns=['paymentMode'], aggfunc = np.sum)
-    try:
-        pivotDf['Total'] = pivotDf['Cash'] + pivotDf['Online Transfer']
-    except:
-        pivotDf['Cash'] = 0
-        pivotDf = pivotDf[['Cash','Online Transfer']]
-        pivotDf['Total'] = pivotDf['Cash'] + pivotDf['Online Transfer']
+    pivotDf.fillna(0,inplace=True)
+    pivotDf['Total'] = pivotDf['Cash'] + pivotDf['Online Transfer']
     pivotDf = pd.merge(pivotDf,billGroupBy,left_index=True,right_index=True,how='outer')
     pivotDf['ratio'] = pivotDf['Total']/pivotDf['total']*100
     pivotDf['ratio'] = pivotDf['ratio'].apply(lambda x: f"{int(x)}%")

@@ -1,4 +1,5 @@
 from operator import le
+from re import T
 from threading import stack_size
 import streamlit as st
 def app():
@@ -25,15 +26,18 @@ def app():
     billTempDf['total'] = billTempDf[billCols[3]] + billTempDf[billCols[4]] + billTempDf[billCols[5]] + billTempDf[billCols[6]] + billTempDf[billCols[7]]
     paymentTempDf = paymentDf[paymentDf['flatNo']==flatNo]
     joinedDf = pd.merge(billTempDf, paymentTempDf, left_on='billDate', right_on='paymentDate', how='outer')
-    for i in range(len(joinedDf)):
-        billDate = joinedDf[joinedDf.index==i]['billDate'].values[0]
-        billAmt = joinedDf[joinedDf.index==i]['total'].values[0]
-        paymentDate = joinedDf[joinedDf.index==i]['paymentDate'].values[0]
-        paymentAmt = joinedDf[joinedDf.index==i]['amount'].values[0]
-        dfList = [billDate,billAmt,0]
-        statementDf.loc[len(statementDf)] = dfList
-        dfList = [paymentDate,0,paymentAmt]
-        statementDf.loc[len(statementDf)] = dfList
+    for i in list(joinedDf.index):
+        nanCheck = pd.isnull(joinedDf[joinedDf.index==i]['billDate'].values[0])
+        if nanCheck:
+            paymentDate = joinedDf[joinedDf.index==i]['paymentDate'].values[0]
+            paymentAmt = joinedDf[joinedDf.index==i]['amount'].values[0]
+            dfList = [paymentDate,0,paymentAmt]
+            statementDf.loc[len(statementDf)] = dfList
+        else:
+            billDate = joinedDf[joinedDf.index==i]['billDate'].values[0]
+            billAmt = joinedDf[joinedDf.index==i]['total'].values[0]
+            dfList = [billDate,billAmt,0]
+            statementDf.loc[len(statementDf)] = dfList
         statementDf.dropna(inplace=True)
         statementDf['Bills'] = statementDf['Bills'].astype(int)
         statementDf['Payments'] = statementDf['Payments'].astype(int)

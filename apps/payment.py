@@ -18,7 +18,7 @@ def app():
         paymentDate = st.date_input("Payment Date")
         flatNo = st.selectbox("Flat No.",flatList)
         amount = st.text_input("Payment Amount")
-        mode = st.radio("Payment Mode",["Cash","Online Transfer"])
+        mode = st.radio("Payment Mode",["Cash","Online Transfer","Adjustment"])
         submitted = st.form_submit_button("Submit")
         if submitted:
             tenantName = tenantDict.get(flatNo)

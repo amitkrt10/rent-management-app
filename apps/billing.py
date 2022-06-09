@@ -16,7 +16,7 @@ def app():
     today = date.today()
     prevMonth = (today - dateutil.relativedelta.relativedelta(months=1)).strftime("%m/%Y")
     prevMonth1 = (today - dateutil.relativedelta.relativedelta(months=2)).strftime("%m/%Y")
-    prevMonth2 = (today - dateutil.relativedelta.relativedelta(months=2)).strftime("%m/%Y")
+    prevMonth2 = (today - dateutil.relativedelta.relativedelta(months=3)).strftime("%m/%Y")
 
     if st.button("Create Bill for "+prevMonth):
         if prevMonth in billMonthList:

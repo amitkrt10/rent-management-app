@@ -48,31 +48,32 @@ def app():
     paymentDf = am.read_gsheet(st.secrets["sheetId"],"Sheet7")
     pivotDf = pd.pivot_table(paymentDf,values='amount',index='paymentMonth',columns=['paymentMode'], aggfunc = np.sum)
     pivotDf.fillna(0,inplace=True)
-    pivotDf['Total'] = pivotDf['Cash'] + pivotDf['Online Transfer']
+    pivotDf['Total'] = pivotDf['Cash'] + pivotDf['Online Transfer'] + pivotDf['Adjustment']
     pivotDf = pd.merge(pivotDf,billGroupBy,left_index=True,right_index=True,how='outer')
-    pivotDf.fillna(0,inplace=True)
     pivotDf['ratio'] = pivotDf['Total']/pivotDf['total']*100
     pivotDf['ratio'] = pivotDf['ratio'].apply(lambda x: f"{int(x)}%")
     
     lendf = len(pivotDf)+1
     viewCols = list(pivotDf.columns)
     dfValues = [list(pivotDf.index.values) + ['<b>Total</b>'],
-                    list(pivotDf[viewCols[0]]) + [f'<b>{pivotDf[viewCols[0]].sum()}</b>'],
-                    list(pivotDf[viewCols[1]]) + [f'<b>{pivotDf[viewCols[1]].sum()}</b>'],
-                    list(pivotDf[viewCols[2]]) + [f'<b>{pivotDf[viewCols[2]].sum()}</b>'],
-                    list(pivotDf[viewCols[3]]) + [f'<b>{pivotDf[viewCols[3]].sum()}</b>'],
-                    list(pivotDf[viewCols[4]]) + [f'<b>{int(pivotDf[viewCols[2]].sum()/pivotDf[viewCols[3]].sum()*100)}%</b>']]
+                    list(pivotDf[viewCols[1]]) + [f'<b>{int(pivotDf[viewCols[1]].sum())}</b>'],
+                    list(pivotDf[viewCols[2]]) + [f'<b>{int(pivotDf[viewCols[2]].sum())}</b>'],
+                    list(pivotDf[viewCols[0]]) + [f'<b>{int(pivotDf[viewCols[0]].sum())}</b>'],
+                    list(pivotDf[viewCols[3]]) + [f'<b>{int(pivotDf[viewCols[3]].sum())}</b>'],
+                    list(pivotDf[viewCols[4]]) + [f'<b>{int(pivotDf[viewCols[4]].sum())}</b>'],
+                    list(pivotDf[viewCols[5]]) + [f'<b>{int(pivotDf[viewCols[3]].sum()/pivotDf[viewCols[4]].sum()*100)}%</b>']]
 
     fig = go.Figure(data=[go.Table(
-    columnorder = [1,2,3,4,5,6],
-    columnwidth = [30,30,30,30,30,30],
+    columnorder = [1,2,3,4,5,6,7],
+    columnwidth = [24,26,26,26,26,26,26],
     header = dict(
         values = [['<b>Month</b>'],
                     ['<b>Cash</b>'],
                     ['<b>Online</b>'],
-                    ['<b>Total Collection</b>'],
-                    ['<b>Total Billed</b>'],
-                    ['<b>Collection %</b>']],
+                    ['<b>Adjust</b>'],
+                    ['<b>Collection</b>'],
+                    ['<b>Billed</b>'],
+                    ['<b>Coll. %</b>']],
         line_color='darkslategray',
         fill_color='royalblue',
         align='center',

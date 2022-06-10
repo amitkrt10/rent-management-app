@@ -1,5 +1,6 @@
 from operator import le
 from re import T
+import stat
 from threading import stack_size
 import streamlit as st
 def app():
@@ -41,6 +42,10 @@ def app():
         statementDf.dropna(inplace=True)
         statementDf['Bills'] = statementDf['Bills'].astype(int)
         statementDf['Payments'] = statementDf['Payments'].astype(int)
+    temp1 = statementDf[statementDf["Date"]=='Initial Due']
+    temp2 = statementDf[statementDf["Date"]!='Initial Due']
+    temp2.sort_values(by="Date",inplace=True)
+    statementDf = pd.concat([temp1,temp2]).reset_index(drop=True)
     statementDf["Temp"] = statementDf['Bills'] - statementDf['Payments']
     statementDf["Dues"] = statementDf['Temp'].cumsum()
     lendf = len(statementDf)+1

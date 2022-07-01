@@ -51,6 +51,7 @@ def app():
     pivotDf['Total'] = pivotDf['Cash'] + pivotDf['Online Transfer'] + pivotDf['Adjustment']
     pivotDf = pd.merge(pivotDf,billGroupBy,left_index=True,right_index=True,how='outer')
     pivotDf['ratio'] = pivotDf['Total']/pivotDf['total']*100
+    pivotDf.fillna(0,inplace=True)
     pivotDf['ratio'] = pivotDf['ratio'].apply(lambda x: f"{int(x)}%")
     
     lendf = len(pivotDf)+1

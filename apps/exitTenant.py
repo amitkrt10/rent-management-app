@@ -44,13 +44,13 @@ def app():
             wks = sh[14]
             wks.set_dataframe(exitDuesDf,(1,1))
             st.write("* Dues Copied to Exit Table")
-            # Add to Exit Billings
-            exitBillRecords = billDf[billDf['flatNo']==flatNo]
-            exitBillRecords["tenantName"] == tenantName
-            exitBillDf = pd.concat([exitBillDf,exitBillRecords]).reset_index(drop=True)
-            wks = sh[12]
-            wks.set_dataframe(exitBillDf,(1,1))
-            st.write("* Bills Copied to Exit Table")
+            # # Add to Exit Billings
+            # exitBillRecords = billDf[billDf['flatNo']==flatNo]
+            # exitBillRecords["tenantName"] == tenantName
+            # exitBillDf = pd.concat([exitBillDf,exitBillRecords]).reset_index(drop=True)
+            # wks = sh[12]
+            # wks.set_dataframe(exitBillDf,(1,1))
+            # st.write("* Bills Copied to Exit Table")
             # Remove from Billings
             index_names = billDf[billDf['flatNo']==flatNo].index
             billDf.drop(index_names, inplace = True)
@@ -58,13 +58,13 @@ def app():
             wks.clear()
             wks.set_dataframe(billDf,(1,1))
             st.write("* Bills Deleted")
-            # Add Exit Payments
-            exitPaymentRecords = paymentDf[paymentDf['flatNo']==flatNo]
-            exitPaymentRecords["tenantName"] = tenantName
-            exitPaymentDf = pd.concat([exitPaymentDf,exitPaymentRecords]).reset_index(drop=True)
-            wks = sh[13]
-            wks.set_dataframe(exitPaymentDf,(1,1))
-            st.write("* Payments Copied to Exit Table")
+            # # Add Exit Payments
+            # exitPaymentRecords = paymentDf[paymentDf['flatNo']==flatNo]
+            # exitPaymentRecords["tenantName"] = tenantName
+            # exitPaymentDf = pd.concat([exitPaymentDf,exitPaymentRecords]).reset_index(drop=True)
+            # wks = sh[13]
+            # wks.set_dataframe(exitPaymentDf,(1,1))
+            # st.write("* Payments Copied to Exit Table")
             # Remove from Payments
             index_names = paymentDf[paymentDf['flatNo']==flatNo].index
             paymentDf.drop(index_names, inplace = True)
